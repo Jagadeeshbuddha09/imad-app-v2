@@ -14,7 +14,7 @@ app.get('/ui/style.css', function (req, res) {
 });
 
 app.get('/articleone', function (req, res) {
-  res.send('Articleone page will be served shortly');
+  res.sendFile(path.join(__dirname,'ui','articleone.html'));
 });
 
 app.get('/ui/madi.png', function (req, res) {
