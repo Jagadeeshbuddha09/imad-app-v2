@@ -13,12 +13,66 @@ app.get('/ui/style.css', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'style.css'));
 });
 
-app.get('/articleone', function (req, res) {
-  res.sendFile(path.join(__dirname,'ui','articleone.html'));
-});
+var articles={
+	'articleone':{
+		title:'Article one | Jagadeeshwaran S',
+	    date:'Jan 1,2017',
+	    content:`<p>Contents of article one goes here.<br/>
+			   We are going add some more content and do some css work.
+			   then do some javascripting in server side code-server.js.<br/>
+			   We are going add some more content and do some css work.
+			   then do some javascripting in server side code-server.js<br/>
+			   We are going add some more content and do some css work.
+			   then do some javascripting in server side code-server.js
+		      </p>
+			  <p>Jagadeeshwaran Shanmuganathan</p>`,
+	},
+	'articletwo':{
+		title:'Article Two | Jagadeeshwaran S',
+	    date:'Jan 5,2017',
+	    content:`<p>Contents of article two goes here.<br/>
+			   We are going add some more content and do some css work.
+			   then do some javascripting in server side code-server.js.<br/>
+			   We are going add some more content and do some css work.
+			   then do some javascripting in server side code-server.js<br/>
+			   We are going add some more content and do some css work.
+			   then do some javascripting in server side code-server.js
+		      </p>
+			  <p>Jagadeeshwaran Shanmuganathan</p>`,		
+	},
+};
 
-app.get('/articletwo', function (req, res) {
-  res.sendFile(path.join(__dirname,'ui','articletwo.html'));
+function CreateTemplate(data){
+	var title=data.title;
+	var date=data.date;
+	var content=data.content;
+    var htmltemplate=`
+	    <html>
+           <head>
+             <title>${title}</title>
+	         <link rel="stylesheet" href="/ui/style.css"
+           </head>
+           <body>
+             <div class="container">
+               <div>
+                 <a href="/">Home</a> 
+               </div>
+		       <div>
+		       Date:${date}
+		       </div>
+               <div>
+		         ${content}
+               </div>
+	         </div>
+           </body>
+         </html>`;
+		 return htmltemplate;
+}
+
+app.get('/:articleName', function (req, res) {
+  var articleName=req.params.articleName;
+  res.send(CreateTemplate(articles[articleName]));
+  //res.sendFile(path.join(__dirname,'ui','articleone.html'));
 });
 
 app.get('/ui/madi.png', function (req, res) {
