@@ -20,7 +20,7 @@ button.onclick=function(){
 		
 	}
 	//make the request
-	request.open('GET','http://http://jagadeeshbuddha09.imad.hasura-app.io/counter',true);
+	request.open('GET','https://jagadeeshbuddha09.imad.hasura-app.io/counter',true);
 	request.send(null);
 };
 
