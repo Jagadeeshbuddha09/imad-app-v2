@@ -13,6 +13,38 @@ app.get('/ui/style.css', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'style.css'));
 });
 
+app.get('/ui/main.js',function(req, res){
+	res.sendFile(path.join(__dirname, 'ui', 'main.js'));;
+});
+
+
+function CreateTemplate(data){
+	var title=data.title;
+	var date=data.date;
+	var content=data.content;
+    var htmltemplate=`
+	    <html>
+           <head>
+             <title>${title}</title>
+	         <link rel="stylesheet" href="/ui/style.css"
+           </head>
+           <body>
+             <div class="container">
+               <div>
+                 <a href="/">Home</a> 
+               </div>
+		       <div>
+		       Date:${date}
+		       </div>
+               <div>
+		         ${content}
+               </div>
+	         </div>
+           </body>
+         </html>`;
+		 return htmltemplate;
+}
+
 var articles={
 	'articleone':{
 		title:'Article one | Jagadeeshwaran S',
@@ -42,38 +74,20 @@ var articles={
 	},
 };
 
-function CreateTemplate(data){
-	var title=data.title;
-	var date=data.date;
-	var content=data.content;
-    var htmltemplate=`
-	    <html>
-           <head>
-             <title>${title}</title>
-	         <link rel="stylesheet" href="/ui/style.css"
-           </head>
-           <body>
-             <div class="container">
-               <div>
-                 <a href="/">Home</a> 
-               </div>
-		       <div>
-		       Date:${date}
-		       </div>
-               <div>
-		         ${content}
-               </div>
-	         </div>
-           </body>
-         </html>`;
-		 return htmltemplate;
-}
+var counter1 = 0;
+app.get('/counter',function(req,res){
+	counter1 = counter1+1;
+	res.send(counter1,toString());
+});
+
+
 
 app.get('/:articleName', function (req, res) {
   var articleName=req.params.articleName;
   res.send(CreateTemplate(articles[articleName]));
   //res.sendFile(path.join(__dirname,'ui','articleone.html'));
 });
+
 
 app.get('/ui/madi.png', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'madi.png'));
