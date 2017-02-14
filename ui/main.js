@@ -20,25 +20,44 @@ button.onclick=function(){
 		
 	}
 	//make the request
-	request.open('GET','https://jagadeeshbuddha09.imad.hasura-app.io/counter',true);
+	request.open('GET','http://localhost:8080/counter',true);
 	request.send(null);
 };
 
 
+//send name to the server
 
 
 
-
-
-
-
-
-
-
-
-
-
-
+//render all the names(all names sent so far) returned by the server
+var submit = document.getElementById('submit_btn');
+submit.onclick=function(){
+   //Create an request object
+	var request = new XMLHttpRequest(); 
+	//capture the response and store it in a variable
+	var nameliststring='';
+	var name = document.getElementById('inputbox').value;
+	request.onreadystatechange = function(){
+		if(request.readyState === XMLHttpRequest.DONE)
+		{
+			//take some action
+			if(request.status == 200){
+				var displayarea = document.getElementById('namelist');
+				console.log(request);
+				var names = request.responseText;
+				console.log(names);
+				names = JSON.parse(names);
+				
+				for(var i=0;i<names.length;i++){
+					nameliststring = nameliststring + names[i] +'<br/>';
+				}
+				displayarea.innerHTML = nameliststring;
+			}
+		}
+	}
+	request.open('GET','http://localhost:8080/submit-name?name=' + name,true);
+	request.send(null);
+};	
 
 
 
