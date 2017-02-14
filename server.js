@@ -14,7 +14,7 @@ app.get('/ui/style.css', function (req, res) {
 });
 
 app.get('/ui/main.js',function(req, res){
-	res.sendFile(path.join(__dirname, 'ui', 'main.js'));
+	res.sendFile(path.join(__dirname, 'ui', 'main.js'));;
 });
 
 
@@ -77,10 +77,17 @@ var articles={
 var counter1 = 0;
 app.get('/counter',function(req,res){
 	counter1 = counter1+1;
-	res.send(counter1,toString());
+	res.send(counter1.toString());
 });
 
-
+var names = [];
+app.get('/submit-name?:name',function(req,res){
+	//get the name from the request
+	var name = req.query.name;
+	names.push(name);
+	//JSON - javascript object notation
+	res.send(JSON.stringify(names));
+});
 
 app.get('/:articleName', function (req, res) {
   var articleName=req.params.articleName;
