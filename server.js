@@ -118,9 +118,11 @@ app.get('/articles/:articleName', function (req, res) {
   var articleName=req.params.articleName;
   console.log(articleName);
   var articleData = '';
-  pool.query("SELECT * FROM article WHERE title = '" + req.params.articleName +"'",function(err,result){
+  pool.query("SELECT * FROM article WHERE title = '" + articleName +"'",function(err,result){
     if(err){
         res.status(500).send(err.toString());
+        console.log(err.toString());
+        console.log("AM HERE");
     }   
     else{
         if(result.rows.length === 0){
