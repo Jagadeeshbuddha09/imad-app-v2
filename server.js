@@ -122,6 +122,7 @@ app.get('/test-db', function(req,res){
            res.status(500).send(err.toString());
        }
        else{
+           console.log("AM IN RIGHT PLACE");
            res.send(JSON.stringify(result.rows));
        }
     });
