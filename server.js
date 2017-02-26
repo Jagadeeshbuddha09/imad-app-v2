@@ -104,7 +104,7 @@ app.get('/counter',function(req,res){
 	counter1 = counter1+1;
 	res.send(counter1.toString());
 });
-
+/*
 var names = [];
 app.get('/submit-name?:name',function(req,res){
 	//get the name from the request
@@ -113,8 +113,8 @@ app.get('/submit-name?:name',function(req,res){
 	//JSON - javascript object notation
 	res.send(JSON.stringify(names));
 });
-
-app.get('/articles/:articleName', function (req, res) {
+*/
+app.get('/:articleName', function (req, res) {
   var articleName=req.params.articleName;
   console.log(articleName);
   var articleData = '';
