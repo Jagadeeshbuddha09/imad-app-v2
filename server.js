@@ -114,26 +114,41 @@ app.get('/submit-name?:name',function(req,res){
 	res.send(JSON.stringify(names));
 });
 */
+app.get('/test-db', function(req,res){
+    //make a select request
+    //return a response with the results
+    pool.query('SELECT * FROM article WHERE id=1',function(err,result){
+       if (err){
+           res.status(500).send(err.toString());
+       }
+       else{
+           res.send(JSON.stringify(result.rows));
+       }
+    });
+});
+
 app.get('/:articleName', function (req, res) {
-  var articleName=req.params.articleName;
-  console.log(articleName);
-  var articleData = '';
-  pool.query('SELECT * FROM article WHERE id = 1',function(err,result){
-    if(err){
-        res.status(500).send(err.toString());
-        console.log(err.toString());
-        console.log("AM HERE");
-    }   
-    else{
-        if(result.rows.length === 0){
-            res.status(404).send('Article not found');
-        }
-        else{
-            articleData = result.rows[0];
-            console.log(articleData);
-        }
-    }
-  });
+    var articleName=req.params.articleName;
+    console.log(articleName);
+    var articleData = '';
+    pool.query('SELECT * FROM article WHERE id=1',function(err,result){
+      if(err){
+          res.status(500).send(err.toString());
+          console.log(err.toString());
+          console.log("AM HERE");
+      }   
+      else{
+          if(result.rows.length === 0){
+              res.status(404).send('Article not found');
+          }
+          else{
+              console.log("AM IN RIGHT PLACE");
+              articleData = result.rows[0];
+              res.send(JSON.stringify(articleData));
+              //console.log(articleData);
+          }
+      }
+    });
   //res.send(CreateTemplate(articleData));
   //res.sendFile(path.join(__dirname,'ui','articleone.html'));
 });
