@@ -44,6 +44,7 @@ app.get('/test-db', function(req,res){
 
 
 function CreateTemplate(data){
+    console.log(data);
 	var title=data.title;
 	var date=data.date;
 	var content=data.content;
@@ -145,7 +146,7 @@ app.get('/:articleName', function (req, res) {
           else{
               console.log("AM IN RIGHT PLACE");
               articleData = result.rows[0];
-              res.send(JSON.stringify(articleData));
+              //res.send(JSON.stringify(articleData));
               //console.log(articleData);
           }
       }
