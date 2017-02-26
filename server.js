@@ -150,8 +150,8 @@ app.get('/:articleName', function (req, res) {
           }
       }
     });
-  //res.send(CreateTemplate(articleData));
-  //res.sendFile(path.join(__dirname,'ui','articleone.html'));
+  res.send(CreateTemplate(articleData));
+  res.sendFile(path.join(__dirname,'ui','articleone.html'));
 });
 
 
