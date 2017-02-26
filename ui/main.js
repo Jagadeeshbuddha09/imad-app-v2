@@ -26,7 +26,7 @@ button.onclick=function(){
 
 
 //send name to the server
-
+/*
 
 
 //render all the names(all names sent so far) returned by the server
@@ -64,7 +64,7 @@ submit.onclick=function(){
 
 
 
-
+*/
 
 
 /*var element = document.getElementById('maintext');
