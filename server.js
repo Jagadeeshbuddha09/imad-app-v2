@@ -128,6 +128,7 @@ app.get('/:articleName', function (req, res) {
         }
         else{
             articleData = result.rows[0];
+            console.log(articleData);
         }
     }
   });
