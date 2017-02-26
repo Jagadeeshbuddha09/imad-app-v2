@@ -132,7 +132,7 @@ app.get('/test-db', function(req,res){
 app.get('/:articleName', function (req, res) {
     var articleName=req.params.articleName;
     console.log(articleName);
-    var articleData = '';
+    var articleData = 'Jagadeesh';
     pool.query('SELECT * FROM article WHERE id=1',function(err,result){
       if(err){
           res.status(500).send(err.toString());
