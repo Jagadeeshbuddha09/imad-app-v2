@@ -136,22 +136,19 @@ app.get('/:articleName', function (req, res) {
     pool.query('SELECT * FROM article WHERE id=1',function(err,result){
       if(err){
           res.status(500).send(err.toString());
-          console.log(err.toString());
-          console.log("AM HERE");
-      }   
+             }   
       else{
           if(result.rows.length === 0){
               res.status(404).send('Article not found');
           }
           else{
-              console.log(result.rows);
               articleData = result.rows[0];
               //res.send(JSON.stringify(articleData));
               //console.log(articleData);
           }
       }
     });
-  res.send(JSON.stringify(articleData));
+    res.send(JSON.stringify(articleData));
   //res.send(CreateTemplate(articleData));
   //res.sendFile(path.join(__dirname,'ui','articleone.html'));
 });
