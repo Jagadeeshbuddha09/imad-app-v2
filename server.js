@@ -119,19 +119,18 @@ app.get('/test-db', function(req,res){
 app.get('/:articleName', function (req, res) {
     //var articleName=req.params.articleName;
     pool.query('SELECT * FROM article WHERE id=1',function(err,result){
-      var articleData = 0;
       if(err){
           res.status(500).send(err.toString());
              }   
       else{
-              
-              articleData = result.rows[0];
+              var articleData = result.rows[0];
+              res.send(CreateTemplate(articleData));
               //res.send(JSON.stringify(articleData));
               //console.log(articleData);
           }
     });
    res.send(JSON.stringify(articleData));
-  //res.send(CreateTemplate(articleData));
+  //
   //res.sendFile(path.join(__dirname,'ui','articleone.html'));
 });
 
