@@ -118,8 +118,8 @@ app.get('/test-db', function(req,res){
 
 app.get('/:articleName', function (req, res) {
     //var articleName=req.params.articleName;
-    var articleData = 0;
     pool.query('SELECT * FROM article WHERE id=1',function(err,result){
+      var articleData = 0;
       if(err){
           res.status(500).send(err.toString());
              }   
