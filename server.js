@@ -151,7 +151,7 @@ app.get('/:articleName', function (req, res) {
           }
       }
     });
-  //res.send(JSON.stringify(articleData));
+  res.send(JSON.stringify(articleData));
   //res.send(CreateTemplate(articleData));
   //res.sendFile(path.join(__dirname,'ui','articleone.html'));
 });
