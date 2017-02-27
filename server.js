@@ -129,7 +129,6 @@ app.get('/:articleName', function (req, res) {
               //console.log(articleData);
           }
     });
-   res.send(JSON.stringify(articleData));
   //
   //res.sendFile(path.join(__dirname,'ui','articleone.html'));
 });
