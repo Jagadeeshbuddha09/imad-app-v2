@@ -5,7 +5,7 @@ button.onclick=function(){
    //Create an request object
 	var request = new XMLHttpRequest(); 
 	//capture the response and store it in a variable
-	//console.log(request);
+	console.log(request);
 	request.onreadystatechange = function(){
 		if(request.readyState === XMLHttpRequest.DONE)
 		{
@@ -20,13 +20,13 @@ button.onclick=function(){
 		
 	}
 	//make the request
-	request.open('GET','http://jagadeeshbuddha09.imad.hasura-app.io/counter',true);
+	request.open('GET','http://localhost:8080/counter',true);
 	request.send(null);
 };
 
 
 //send name to the server
-/*
+
 
 
 //render all the names(all names sent so far) returned by the server
@@ -55,16 +55,21 @@ submit.onclick=function(){
 			}
 		}
 	}
-	//request.open('GET','http://jagadeeshbuddha09.imad.hasura-app.io/submit-name?name=' + name,true);
-	//request.send(null);
+	request.open('GET','http://localhost:8080/submit-name?name=' + name,true);
+	request.send(null);
 };	
 
 
+var submit_cmt=document.getElementById('submit_cmt');
+var comment=document.getElementById('comment');
+console.log('jagadeesh'+comment);
+submit_cmt.onclick=function()
+{
+	console.log(comment);
+};
 
 
 
-
-*/
 
 
 /*var element = document.getElementById('maintext');
