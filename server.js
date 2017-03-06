@@ -1,15 +1,19 @@
 var express = require('express');
 var morgan = require('morgan');
 var path = require('path');
-
 var Pool = require('pg').Pool;
+var crypto = require('crypto');
+
 var config = {
-    user:'jagadeeshbuddha09',
-    database:'jagadeeshbuddha09',
-    host:'db.imad.hasura-app.io',
+    user:'postgres',
+    database:'postgres',
+    host:'localhost',
     port:'5432',
-    password: process.env.DB_PASSWORD,
+    password: 'jagadeesh',
 };
+
+
+var pool = new Pool(config);
 
 var app = express();
 app.use(morgan('combined'));
@@ -23,11 +27,11 @@ app.get('/ui/style.css', function (req, res) {
 });
 
 app.get('/ui/main.js',function(req, res){
-	res.sendFile(path.join(__dirname, 'ui', 'main.js'));
+	res.sendFile(path.join(__dirname, 'ui', 'main.js'));;
 });
 
+
 function CreateTemplate(data){
-    
 	var title=data.title;
 	var date=data.date;
 	var content=data.content;
@@ -54,6 +58,83 @@ function CreateTemplate(data){
 		 return htmltemplate;
 }
 
+var counter1 = 0;
+app.get('/counter',function(req,res){
+	counter1 = counter1+1;
+	res.send(counter1.toString());
+});
+
+var names = [];
+app.get('/submit-name?:name',function(req,res){
+	//get the name from the request
+	var name = req.query.name;
+	names.push(name);
+	//JSON - javascript object notation
+	res.send(JSON.stringify(names));
+});
+
+function hash(input,salt)
+{
+	var hashed = crypto.pbkdf2Sync(input, salt,100,512,'sha512');
+	return hashed.toString('hex');
+}
+
+
+
+
+app.get('/hash/:input',function(req,res){
+  var hashedstring = hash(req.params.input,'this-is-some-random-string');
+  res.send(hashedstring);
+  
+}
+);
+
+app.get('/:articleName', function (req, res) {
+  var articleName=req.params.articleName;
+  pool.query('SELECT * FROM article where id=2',function(err,result){
+       if (err){
+           res.status(500).send(err.toString());
+       }
+       else{
+		   var articleData = result.rows[0];
+		   res.send(CreateTemplate(articleData));
+       }
+    });
+  });
+
+app.get('/ui/madi.png', function (req, res) {
+  res.sendFile(path.join(__dirname, 'ui', 'madi.png'));
+});
+
+
+var port = 8080; // Use 8080 for local development because you might already have apache running on 80
+app.listen(8080, function () {
+  console.log(`IMAD course app listening on port ${port}!`);
+});
+
+
+
+
+
+/*
+app.get('/test-db', function(req,res){
+    //make a select request
+    //return a response with the results
+    pool.query('SELECT * FROM article',function(err,result){
+       if (err){
+           res.status(500).send(err.toString());
+       }
+       else{
+           res.send(JSON.stringify(result));
+       }
+    });
+});
+*/
+
+
+
+
+/*
 var articles={
 	'articleone':{
 		title:'Article one | Jagadeeshwaran S',
@@ -82,64 +163,4 @@ var articles={
 			  <p>Jagadeeshwaran Shanmuganathan</p>`,		
 	},
 };
-
-var counter1 = 0;
-app.get('/counter',function(req,res){
-	counter1 = counter1+1;
-	res.send(counter1.toString());
-});
-/*
-var names = [];
-app.get('/submit-name?:name',function(req,res){
-	//get the name from the request
-	var name = req.query.name;
-	names.push(name);
-	//JSON - javascript object notation
-	res.send(JSON.stringify(names));
-});
 */
-
-
-var pool = new Pool(config);
-
-app.get('/test-db', function(req,res){
-    //make a select request
-    //return a response with the results
-    pool.query('SELECT * FROM article WHERE id=1',function(err,result){
-       if (err){
-           res.status(500).send(err.toString());
-       }
-       else{
-           console.log("AM IN RIGHT PLACE");
-           res.send(JSON.stringify(result.rows));
-       }
-    });
-});
-
-app.get('/:articleName', function (req, res) {
-    //var articleName=req.params.articleName;
-    pool.query('SELECT * FROM article WHERE id=1',function(err,result){
-      if(err){
-          res.status(500).send(err.toString());
-             }   
-      else{
-              var articleData = result.rows[0];
-              res.send(CreateTemplate(articleData));
-              //res.send(JSON.stringify(articleData));
-              //console.log(articleData);
-          }
-    });
-  //
-  //res.sendFile(path.join(__dirname,'ui','articleone.html'));
-});
-
-
-app.get('/ui/madi.png', function (req, res) {
-  res.sendFile(path.join(__dirname, 'ui', 'madi.png'));
-});
-
-
-var port = 8080; // Use 8080 for local development because you might already have apache running on 80
-app.listen(8080, function () {
-  console.log(`IMAD course app listening on port ${port}!`);
-});
