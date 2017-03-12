@@ -98,6 +98,27 @@ app.post('/create-user',function(req,res){
 }
 );
 
+app.post('/login',function(req,res){
+	var username = req.body.username;
+	var dbString = hash(password,salt);
+	pool.query('SELECT * FROM "user" WHERE username=$1',[username],function(err,result){
+       if (err){
+           res.status(500).send(err.toString());
+       }
+       else{
+           if(result.rows.length === 0)
+           {
+               res.send(403).send('username/password is invalid');
+           }
+           else{
+               res.send(JSON.stringify(result));
+           }
+       }
+    });
+}
+);
+
+
 
 
 app.get('/hash/:input',function(req,res){
