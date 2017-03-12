@@ -61,21 +61,6 @@ function CreateTemplate(data){
 		 return htmltemplate;
 }
 
-var counter1 = 0;
-app.get('/counter',function(req,res){
-	counter1 = counter1+1;
-	res.send(counter1.toString());
-});
-
-var names = [];
-app.get('/submit-name?:name',function(req,res){
-	//get the name from the request
-	var name = req.query.name;
-	names.push(name);
-	//JSON - javascript object notation
-	res.send(JSON.stringify(names));
-});
-
 function hash(input,salt)
 {
 	var hashed = crypto.pbkdf2Sync(input, salt,100,512,'sha512');
@@ -129,15 +114,6 @@ app.post('/login',function(req,res){
 });
 
 
-
-
-app.get('/hash/:input',function(req,res){
-  var hashedstring = hash(req.params.input,'this-is-some-random-string');
-  res.send(hashedstring);
-  
-}
-);
-
 app.get('/:articleName', function (req, res) {
   var articleName=req.params.articleName;
   pool.query('SELECT * FROM article WHERE title=$1;',[articleName],function(err,result){
@@ -162,8 +138,38 @@ app.listen(8080, function () {
 });
 
 
+/*
+var names = [];
+app.get('/submit-name?:name',function(req,res){
+	//get the name from the request
+	var name = req.query.name;
+	names.push(name);
+	//JSON - javascript object notation
+	res.send(JSON.stringify(names));
+});
+*/
 
 
+
+
+/*
+
+app.get('/hash/:input',function(req,res){
+  var hashedstring = hash(req.params.input,'this-is-some-random-string');
+  res.send(hashedstring);
+  
+}
+);
+*/
+
+
+/*
+var counter1 = 0;
+app.get('/counter',function(req,res){
+	counter1 = counter1+1;
+	res.send(counter1.toString());
+});
+*/
 
 /*
 app.get('/test-db', function(req,res){
