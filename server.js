@@ -5,14 +5,14 @@ var Pool = require('pg').Pool;
 var crypto = require('crypto');
 var bodyparser = require('body-parser');
 
-var config = {
-    user:'postgres',
-    database:'postgres',
-    host:'localhost',
-    port:'5432',
-    password: 'jagadeesh',
-};
 
+var config = {
+     user:'jagadeeshbuddha09',	
+     database:'jagadeeshbuddha09',
+     host:'db.imad.hasura-app.io',
+      port:'5432',
+     password: process.env.DB_PASSWORD,
+  };
 
 var pool = new Pool(config);
 
@@ -30,7 +30,7 @@ app.get('/ui/style.css', function (req, res) {
 });
 
 app.get('/ui/main.js',function(req, res){
-	res.sendFile(path.join(__dirname, 'ui', 'main.js'));;
+	res.sendFile(path.join(__dirname, 'ui', 'main.js'));
 });
 
 
