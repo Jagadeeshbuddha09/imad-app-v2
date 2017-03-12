@@ -25,18 +25,6 @@ submit.onclick=function(){
 };	
 
 
-var submit_cmt=document.getElementById('submit_cmt');
-var comment=document.getElementById('comment');
-console.log('jagadeesh'+comment);
-submit_cmt.onclick=function()
-{
-	console.log(comment);
-};
-
-
-
-
-
 /*var element = document.getElementById('maintext');
 //element.innerHTML = 'New Value';
 
