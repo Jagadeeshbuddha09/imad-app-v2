@@ -79,7 +79,7 @@ app.get('/submit-name?:name',function(req,res){
 function hash(input,salt)
 {
 	var hashed = crypto.pbkdf2Sync(input, salt,100,512,'sha512');
-	return hashed.toString('hex');
+	return ["pbkdf2Sync","100",salt,hashed.toString('hex')].join('$');
 }
 
 app.post('/create-user',function(req,res){
