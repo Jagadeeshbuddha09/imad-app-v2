@@ -20,7 +20,7 @@ submit.onclick=function(){
 		}
 	}
 	request.open('POST','http://jagadeeshbuddha09.imad.hasura-app.io/login',true);
-	request.header
+	request.setRequestHeader('Content-Type','application/json');
 	request.send(JSON.stringify({'username':username,'password':password}));
 };	
 
