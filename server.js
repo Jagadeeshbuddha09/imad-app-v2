@@ -100,6 +100,7 @@ app.post('/create-user',function(req,res){
 
 app.post('/login',function(req,res){
 	var username = req.body.username;
+	var password = req.body.password;
 	pool.query('SELECT * FROM "user" WHERE username=$1',[username],function(err,result){
        if (err){
            res.status(500).send(err.toString());
@@ -112,7 +113,7 @@ app.post('/login',function(req,res){
            else{
                var dbString  = result.rows[0].password.split('$');
                var salt = dbString[2];
-               var hashedstring = crypto.pbkdf2Sync(input, salt,100,512,'sha512');
+               var hashedstring = hash(password,salt);
                if (dbString === hashedstring)
                {
                    res.send('user credentials correct!');
