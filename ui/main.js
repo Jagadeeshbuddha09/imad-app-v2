@@ -5,20 +5,21 @@ submit.onclick=function(){
    //Create an request object
 	var request = new XMLHttpRequest(); 
 	//capture the response and store it in a variable
-	var username = document.getElementById('username').value;
-	var password = document.getElementById('password').value;
 	
 	request.onreadystatechange = function(){
 		if(request.readyState === XMLHttpRequest.DONE)
 		{
 			//take some action
 			if(request.status == 200){
-				console.log(username);
-				console.log(password);
 				alert('userlogged in successfully');
 			}
 		}
 	}
+	
+	var username = document.getElementById('username').value;
+	var password = document.getElementById('password').value;
+	console.log(username);
+	console.log(password);
 	request.open('POST','http://jagadeeshbuddha09.imad.hasura-app.io/login',true);
 	request.setRequestHeader('Content-Type','application/json');
 	request.send(JSON.stringify({'username':username,'password':password}));
