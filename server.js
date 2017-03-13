@@ -130,6 +130,11 @@ app.get('/check-login',function(req,res){
     }
 });
 
+app.get('/logout',function(req,res){
+    delete req.session.auth;
+    res.send('user logged out');
+});
+
 app.get('/:articleName', function (req, res) {
   var articleName=req.params.articleName;
   pool.query('SELECT * FROM article WHERE title=$1;',[articleName],function(err,result){
