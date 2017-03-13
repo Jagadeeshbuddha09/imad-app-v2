@@ -99,6 +99,7 @@ app.post('/login',function(req,res){
                res.send(403).send('username/password is invalid');
            }
            else{
+               console.log(req);
                var dbString  = result.rows[0].password;
                var salt = dbString.split('$')[2];
                var hashedstring = hash(password,salt);
@@ -106,7 +107,6 @@ app.post('/login',function(req,res){
                {
                    //set the session
                    req.session.auth={userId:result.rows[0].id};
-                   
                    res.send('user credentials correct!');
                    
                }
