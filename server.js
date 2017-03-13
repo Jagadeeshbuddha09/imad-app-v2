@@ -111,7 +111,6 @@ app.post('/login',function(req,res){
                    console.log('req.session.auth');
                    console.log(req.session.auth);
                    res.send('user credentials correct!');
-                   
                }
                else
                {
