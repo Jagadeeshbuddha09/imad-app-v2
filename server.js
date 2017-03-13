@@ -100,6 +100,7 @@ app.post('/login',function(req,res){
            }
            else{
                console.log(req);
+               console.log(result.rows[0]);
                var dbString  = result.rows[0].password;
                var salt = dbString.split('$')[2];
                var hashedstring = hash(password,salt);
