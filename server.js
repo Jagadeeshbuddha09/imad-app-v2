@@ -132,8 +132,9 @@ app.get('/check-login',function(req,res){
 
 app.get('/logout',function(req,res){
     if(req.session.auth){
-      delete req.session.auth;
-      res.send('user logged out');
+        console.log('I am in logout page');
+        //delete req.session.auth;
+        res.send('user logged out');
     }
     else{
         res.send("something is wrong in req.session");
