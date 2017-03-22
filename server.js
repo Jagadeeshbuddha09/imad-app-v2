@@ -131,8 +131,13 @@ app.get('/check-login',function(req,res){
 });
 
 app.get('/logout',function(req,res){
-    delete req.session.auth;
-    res.send('user logged out');
+    if(req.session.auth){
+      delete req.session.auth;
+      res.send('user logged out');
+    }
+    else{
+        res.send("something is wrong in req.session");
+    }
 });
 
 app.get('/:articleName', function (req, res) {
