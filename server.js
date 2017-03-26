@@ -6,6 +6,7 @@ var crypto = require('crypto');
 var bodyparser = require('body-parser');
 var session = require('express-session');
 
+
 var config = {
      user:'jagadeeshbuddha09',	
      database:'jagadeeshbuddha09',
@@ -19,7 +20,8 @@ var pool = new Pool(config);
 var app = express();
 app.use(morgan('combined'));
 app.use(bodyparser.json());
-app.use(session({
+
+    app.use(session({
     secret:'someRandomSecretValue',
     cookie:{maxAge:1000*60*60*24*30}
 }));
@@ -90,6 +92,8 @@ app.post('/create-user',function(req,res){
 app.post('/login',function(req,res){
 	var username = req.body.username;
 	var password = req.body.password;
+	console.log('username'+username);
+	console.log('password'+password);
 	pool.query('SELECT * FROM "user" WHERE username=$1',[username],function(err,result){
        if (err){
            res.status(500).send(err.toString());
