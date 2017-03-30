@@ -72,10 +72,10 @@ function hash(input,salt)
 	return ["pbkdf2Sync","10000",salt,hashed.toString('hex')].join('$');
 }
 
-app.post('/create-user',function(req,res){
+app.get('/create-user',function(req,res){
 	var salt = crypto.randomBytes(128).toString('hex');
-	var password = req.body.password;
-	var username = req.body.username;
+	var password = req.query.password;
+	var username = req.query.username;
 	var dbString = hash(password,salt);
 	pool.query('INSERT INTO "user" (username,password) VALUES ($1,$2)',[username,dbString],function(err,result){
        if (err){
@@ -89,11 +89,11 @@ app.post('/create-user',function(req,res){
 }
 );
 
-app.post('/login',function(req,res){
-	var username = req.body.username;
-	var password = req.body.password;
-	console.log('username'+username);
-	console.log('password'+password);
+app.get('/login',function(req,res){
+	var username = req.query.username;
+	var password = req.query.password;
+	//console.log('username'+username);
+	//console.log('password'+password);
 	pool.query('SELECT * FROM "user" WHERE username=$1',[username],function(err,result){
        if (err){
            res.status(500).send(err.toString());
