@@ -1,6 +1,6 @@
 console.log('Loaded!');
 
-var submit = document.getElementById('submit_btn');
+var submit = document.getElementById('submit_login');
 submit.onclick=function(){
     
 	//Create an request object
@@ -35,6 +35,61 @@ submit.onclick=function(){
 	//request.send(JSON.stringify({username:username, password:password}));
 	
 };	
+
+
+
+//click function for register button
+var submit_register = document.getElementById('submit_register');
+submit_register.onclick=function(){
+    
+	//Create an request object
+	var request = new XMLHttpRequest(); 
+	request.onreadystatechange = function(){
+		if(request.readyState === XMLHttpRequest.DONE)
+		{
+			//take some action
+			if(request.status == 200){
+			    //capture the response and store it in a variable
+				alert('user created successfully');
+			}
+			else if(request.status == 403){
+			    alert('username/password is incorrect');
+			}
+			else if(request.status == 500){
+			    alert('something went wrong');
+			}
+		}
+	};
+	
+    
+	var username = document.getElementById('register_username').value;
+	var password = document.getElementById('register_password').value;
+	request.open('GET','http://localhost:8080/create-user?username='+username+'&password='+password,true);
+	request.send(null);
+	
+	
+	//request.setRequestHeader('Content-Type','application/json');
+	//var json_string = JSON.stringify({'username':username, 'password':password});
+	//request.send(json_string);
+	
+};	
+
+
+
+//click function for logout button
+var logout_btn = document.getElementById('logout_btn');
+logout_btn.onclick=function(){
+	var request = new XMLHttpRequest();
+	request.open('GET','http://localhost:8080/logout',true);
+	request.send(null);
+};	
+
+
+
+
+
+
+
 
 
 /*var element = document.getElementById('maintext');
