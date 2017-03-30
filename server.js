@@ -89,6 +89,8 @@ app.get('/create-user',function(req,res){
 }
 );
 
+
+var sessiontoken = 0;
 app.get('/login',function(req,res){
 	var username = req.query.username;
 	var password = req.query.password;
@@ -111,8 +113,9 @@ app.get('/login',function(req,res){
                var hashedstring = hash(password,salt);
                if (dbString === hashedstring)
                {
+                   sessiontoken = result.rows[0].id;                            
                    //set the session
-                   req.session.auth={userId:result.rows[0].id};
+                   //req.session.auth={userId:result.rows[0].id};
                    //console.log('req.session.auth');
                    //console.log(req.session.auth);
                    alert('user credentials correct');
@@ -128,8 +131,10 @@ app.get('/login',function(req,res){
 });
 
 app.get('/check-login',function(req,res){
-    if(req.session && req.session.auth && req.session.auth.userId){
-        res.send('User logged in' + req.session.auth.userId.toString());
+    if (sessiontoken !== 0){
+//if(req.session && req.session.auth && req.session.auth.userId){
+//        res.send('User logged in' + req.session.auth.userId.toString());
+      	res.send('user logged in' + sessiontoken.toString());
     }
     else{
         res.send('User not logged');
@@ -137,14 +142,15 @@ app.get('/check-login',function(req,res){
 });
 
 app.get('/logout',function(req,res){
-    if(req.session.auth){
-        console.log('I am in logout page');
-        delete req.session.auth;
+    //if(req.session.auth){
+    //    console.log('I am in logout page');
+    //    delete req.session.auth;
+        sessiontoken =0;
         res.send('user logged out');
-    }
-    else{
-        res.send("something is wrong in req.session");
-    }
+    //}
+    //else{
+    //    res.send("something is wrong in req.session");
+    //}
 });
 
 app.get('/:articleName', function (req, res) {
