@@ -72,30 +72,50 @@ function hash(input,salt)
 	return ["pbkdf2Sync","10000",salt,hashed.toString('hex')].join('$');
 }
 
+
 app.get('/create-user',function(req,res){
 	var salt = crypto.randomBytes(128).toString('hex');
+	var username = req.query.username;	
 	var password = req.query.password;
-	var username = req.query.username;
 	var dbString = hash(password,salt);
-	pool.query('INSERT INTO "user" (username,password) VALUES ($1,$2)',[username,dbString],function(err,result){
+	
+	pool.query('SELECT * FROM "user" WHERE username=$1',[username],function(err,result){
        if (err){
            res.status(500).send(err.toString());
        }
+	   
        else{
-           
-		   res.send('User successfully created'+username);
-       }
-    });
-}
-);
+           if(result.rows.length === 0)
+           {
+			   pool.query('INSERT INTO "user" (username,password) VALUES($1,$2)',[username,dbString],function(err,result){		
+		         if (err){
+			
+			
+			       res.status(500).send(err.toString());
+		           }
+		        else{
+			       res.send('User successfully created '+username);
+		            }
+		        });
+           }
+		   
+           else{
+			
+			   res.status(500).send('username already exists');
+		   }
+	   }
+	   
+	});
+	
+	});
+
+
 
 
 var sessiontoken = 0;
 app.get('/login',function(req,res){
 	var username = req.query.username;
 	var password = req.query.password;
-	//console.log('username'+username);
-	//console.log('password'+password);
 	pool.query('SELECT * FROM "user" WHERE username=$1',[username],function(err,result){
        if (err){
            res.status(500).send(err.toString());
@@ -106,52 +126,54 @@ app.get('/login',function(req,res){
                res.status(403).send('username/password is invalid');
            }
            else{
-               //console.log(req);
-               //console.log(result.rows[0]);
+			   
                var dbString  = result.rows[0].password;
                var salt = dbString.split('$')[2];
                var hashedstring = hash(password,salt);
                if (dbString === hashedstring)
                {
-                   sessiontoken = result.rows[0].id;                            
                    //set the session
                    //req.session.auth={userId:result.rows[0].id};
-                   //console.log('req.session.auth');
-                   //console.log(req.session.auth);
-                   alert('user credentials correct');
+				   sessiontoken = result.rows[0].id;                            
+                   //alert('user credentials correct');
                    res.send('user credentials correct!');
                }
                else
                {
-                   res.send('username/password is invalid')
+                   res.status(403).send('username/password is invalid');
+				   
                }
            }
        }
     });
 });
 
+
 app.get('/check-login',function(req,res){
-    if (sessiontoken !== 0){
-//if(req.session && req.session.auth && req.session.auth.userId){
-//        res.send('User logged in' + req.session.auth.userId.toString());
-      	res.send('user logged in' + sessiontoken.toString());
-    }
+	if (sessiontoken !== 0){
+		res.send('user logged in' + sessiontoken.toString());
+	}
+	
+	/*
+    if(req.session && req.session.auth && req.session.auth.userId){
+        res.send('User logged in' + req.session.auth.userId.toString());
+    }*/
+	
     else{
         res.send('User not logged');
     }
 });
 
 app.get('/logout',function(req,res){
-    //if(req.session.auth){
-    //    console.log('I am in logout page');
-    //    delete req.session.auth;
-        sessiontoken =0;
-        res.send('user logged out');
-    //}
-    //else{
-    //    res.send("something is wrong in req.session");
-    //}
+	sessiontoken =0;
+    res.send('user logged out!');
 });
+
+
+
+	
+
+
 
 app.get('/:articleName', function (req, res) {
   var articleName=req.params.articleName;
