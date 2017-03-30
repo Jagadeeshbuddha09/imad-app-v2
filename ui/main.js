@@ -64,7 +64,7 @@ submit_register.onclick=function(){
     
 	var username = document.getElementById('register_username').value;
 	var password = document.getElementById('register_password').value;
-	request.open('GET','http://localhost:8080/create-user?username='+username+'&password='+password,true);
+	request.open('GET','http://jagadeeshbuddha09.imad.hasura-app.io/create-user?username='+username+'&password='+password,true);
 	request.send(null);
 	
 	
@@ -80,7 +80,7 @@ submit_register.onclick=function(){
 var logout_btn = document.getElementById('logout_btn');
 logout_btn.onclick=function(){
 	var request = new XMLHttpRequest();
-	request.open('GET','http://localhost:8080/logout',true);
+	request.open('GET','http://jagadeeshbuddha09.imad.hasura-app.io/logout',true);
 	request.send(null);
 };	
 
