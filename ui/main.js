@@ -29,9 +29,10 @@ submit.onclick=function(){
 	var password = document.getElementById('password').value;
 	console.log(username);
 	console.log(password);
-	request.open('POST','http://jagadeeshbuddha09.imad.hasura-app.io/login',true);
-	request.setRequestHeader('Content-Type','application/json');
-	request.send(JSON.stringify({username:username, password:password}));
+	request.open('GET','http://jagadeeshbuddha09.imad.hasura-app.io/login?username='+username+'&password='+password,true);
+	request.send(null);
+	//request.setRequestHeader('Content-Type','application/json');
+	//request.send(JSON.stringify({username:username, password:password}));
 	
 };	
 
