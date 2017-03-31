@@ -65,7 +65,7 @@ submit_register.onclick=function(){
 	var username = document.getElementById('register_username').value;
 	var password = document.getElementById('register_password').value;
 	request.open('GET','http://jagadeeshbuddha09.imad.hasura-app.io/create-user?username='+username+'&password='+password,true);
-	//request.send(null);
+	request.send(null);
 	
 	
 	//request.setRequestHeader('Content-Type','application/json');
